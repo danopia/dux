@@ -4,10 +4,12 @@
 static uint8_t disp_init = 0;
 
 extern struct DisplayDevice VgaDisplayDevice;
-//extern struct DisplayDevice UartDisplayDevice;
+extern struct DisplayDevice UartDisplayDevice;
 
-struct DisplayDevice *DisplayDeviceList[] = { &VgaDisplayDevice,
-/*								&UartDisplayDevice*/ };
+struct DisplayDevice *DisplayDeviceList[] = {
+	&VgaDisplayDevice,
+	&UartDisplayDevice
+};
 
 #define NUM_DISPLAY_DEVICES ( (sizeof(DisplayDeviceList) / sizeof(DisplayDeviceList[0])) )
 

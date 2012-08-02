@@ -38,25 +38,13 @@ metodo.exe: metodo-libs $(filter src/metodo/%, ${OBJFILES})
 	@${LD} -o src/metodo/metodo.exe ${LDFLAGS} -T src/metodo/boot/link.ld src/metodo/boot/start.o $(filter-out metodo-libs src/metodo/boot/start.o, $^) src/lib/libc/libc.lib
 #	@/bin/echo $^
 
-metodo-libs: libc.lib userland.exe
-
-userland.exe: krnllib.lib libc.lib $(filter src/user/%.o, ${OBJFILES})
-	@${LD} -o src/user/userland.exe ${LDFLAGS} -Ttext 0x200000 $(sort $(filter src/user/%.o, ${OBJFILES})) -Lsrc/lib/krnllib src/lib/krnllib/krnllib.lib -Lsrc/lib/libc src/lib/libc/libc.lib
+metodo-libs: libc.lib
 
 #this needs to take advantage of static rules to apply for all of:
 # <libname>: src/lib/<libname>/*.o
-krnllib.lib: $(filter src/lib/krnllib/%.o, ${OBJFILES})
-	@${AR} rc src/lib/krnllib/krnllib.lib $^
-	@${RANLIB} src/lib/krnllib/krnllib.lib
-
 libc.lib: $(filter src/lib/libc/%.o, ${OBJFILES})
 	@${AR} rc src/lib/libc/libc.lib $^
 	@${RANLIB} src/lib/libc/libc.lib
-
-hal.lib: $(filter src/metodo/hal/%.o, ${OBJFILES})
-	@${AR} rc  src/metodo/hal/hal.lib $^
-	@${RANLIB} src/metodo/hal/hal.lib
-
 
 -include $(find ./src -name '*.d')
 %.o: %.c
@@ -67,9 +55,7 @@ hal.lib: $(filter src/metodo/hal/%.o, ${OBJFILES})
 	@$(call STATUS,"ASSEMBLE",$^)
 	@${ASM} ${ASFLAGS} -o $@ $<
 
-include modules.mk
-
-iso: metodo.exe modules
+iso: metodo.exe
 	@$(call STATUS,"Generating Dux.iso")
 	@./makeiso.sh
 	@$(call STATUS,"DONE")
@@ -100,5 +86,11 @@ clean:
 	@find ./src -name '*.lib' -delete
 	@find ./src -name '*.exe' -delete
 	@find ./src -name '*.d'   -delete
+
+moreclean: clean
+	@find ./isofs -name '*.o'   -delete
+	@find ./isofs -name '*.lib' -delete
+	@find ./isofs -name '*.exe' -delete
+	@find ./isofs -name '*.d'   -delete
 
 .PHONY: all metodo-libs iso clean test qemu qemu-monitor bochs todo sloc clean

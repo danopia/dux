@@ -3,14 +3,7 @@
  * http://www.nondot.org/sabre/os/files/Communication/ser_port.txt
  */
 
-#include <module.h>
-#include <lib/krnllib.h>
-#include <system.h>
-
 #include <driver/uart.h>
-
-//DRIVER_INIT(UartInit)
-//void _start(void) { UartInit(); }
 
 void UartSend(char c)
 {
@@ -34,7 +27,7 @@ static void UartSend_int(char c)
 	HalOutPort(UART_BASE_REGISTER, (uint8_t)c);
 }
 
-MODULE(Uart)
+int UartInit()
 {
 	HalOutPort(UART_BASE_REGISTER + LineControl, DLAB);
 	HalOutPort(UART_BASE_REGISTER, UART_BAUDRATE_DIVISOR);
@@ -47,7 +40,7 @@ MODULE(Uart)
 }
 
 struct DisplayDevice UartDisplayDevice = {
-	.Init		= (void*)Uart__ModuleInit,
+	.Init		= (void*)UartInit,
 	.DisplayChar	= (void*)UartSend,
-	.DisplayClear	= NULL,	/* nothing, for now */
+	.DisplayClear	= NULL,	/* I don't think this is possible. */
 };
