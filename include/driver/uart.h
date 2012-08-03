@@ -30,6 +30,6 @@ enum UART_Registers {
 void UartSend(char c);
 void UartSendString(const char *str);
 static void UartSend_int(char c);
-int UartInit();
+void UartInit();
 
 #endif /* end of include guard: HAL_UART_H */

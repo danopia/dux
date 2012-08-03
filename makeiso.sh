@@ -14,13 +14,10 @@ fi
 mkdir -p isofs/System isofs/Modules
 
 cp src/metodo/metodo.exe isofs/System
-cp src/user/userland.exe isofs/System
 
 for x in `find src -name '*.lib'`; do
   cp $x isofs/System
 done
-
-./copymodules.sh
 
 $isocmd -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -input-charset utf-8 -o dux.iso isofs
 

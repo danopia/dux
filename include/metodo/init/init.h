@@ -16,7 +16,6 @@
 #include <metodo/bochs.h>
 
 #include <metodo/colpa/debug.h>
-#include <metodo/colpa/tests.h>
 
 #include <metodo/init/elfloader.h>
 

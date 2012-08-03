@@ -7,7 +7,7 @@
 
 #include <metodo/core/memory.h>
 
-#include <bootloaders.h>
+#include <multiboot.h>
 
 #include <metodo/misc/panic.h>
 

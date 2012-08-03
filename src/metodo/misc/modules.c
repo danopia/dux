@@ -12,6 +12,3 @@ void *GetModule(const char *name)
 	return NULL;
 }
 
-int RegisterModuleCallback(void *callback, const char *name, ...) {
-  return 0;
-}

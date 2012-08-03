@@ -27,7 +27,7 @@ static void UartSend_int(char c)
 	HalOutPort(UART_BASE_REGISTER, (uint8_t)c);
 }
 
-int UartInit()
+void UartInit()
 {
 	HalOutPort(UART_BASE_REGISTER + LineControl, DLAB);
 	HalOutPort(UART_BASE_REGISTER, UART_BAUDRATE_DIVISOR);
@@ -35,8 +35,6 @@ int UartInit()
 	HalOutPort(UART_BASE_REGISTER + ModemControl, 0);
 
 	UartSendString("UART successfully enabled.\n");
-
-	return 0;
 }
 
 struct DisplayDevice UartDisplayDevice = {

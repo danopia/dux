@@ -1,3 +1,4 @@
+#include <api/display.h>
 #include <system.h>
 #include <config.h>
 

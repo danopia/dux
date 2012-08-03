@@ -1,6 +1,8 @@
 #ifndef API_DISPLAY_H
 #define API_DISPLAY_H
 
+#include <system.h>
+
 struct DisplayDevice {
 	void (*Init) ();
 	void (*Disable) ();

@@ -1,8 +1,7 @@
 #include <metodo/metodo.h>
-#include <metodo/core/scheduler.h>
 #include <string.h>
 
-//#include <driver/serial.h>
+#include <driver/uart.h>
 
 void StartService(const char *msg, const char *name, void (*func)())
 {
@@ -30,11 +29,8 @@ void HalInit(void) {
 	StartInitializer("ISRs", &HalIsrInstall);
 	StartInitializer("IRQs", &HalIrqInstall);
 	StartInitializer("system timer", &HalTimerInit);
-	StartInitializer("syscalls", &HalInitializeSyscalls);
 	StartInitializer("memory management", &init_mm);
 	StartInitializer("keyboard", &HalKeyboardInit);
-	//StartInitializer("scheduler", &HalSchedulerEnable);
-	//StartInitializer("UART", &UartInit);
 
 	StartService("Enabling", "interrupts", &HalEnableInterrupts);
 }
